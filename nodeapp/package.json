@@ -1,0 +1,26 @@
+{
+  "name": "open-covid-attestation",
+  "version": "1.0.0",
+  "description": "COVID-19: Générateur d'attestion de déplacement dérogatoire open-source et sans traceur français",
+  "main": "main.js",
+  "keywords": [
+    "open",
+    "covid",
+    "covid-19",
+    "covid19",
+    "france",
+    "attestation",
+    "open-source",
+    "deplacement",
+    "derogatoire"
+  ],
+  "author": "Timothy Diguiet",
+  "license": "MIT",
+  "dependencies": {
+    "cross-blob": "^1.2.2",
+    "node-fetch": "^2.6.0",
+    "pdf-lib": "^1.4.1",
+    "qrcode": "^1.4.4",
+    "dateformat": "^3.0.3"
+  }
+}
