@@ -1,0 +1,48 @@
+{
+  "name": "open-covid-attestation",
+  "version": "1.0.0",
+  "description": "COVID-19: Générateur d'attestion de déplacement dérogatoire open-source et sans traceur français",
+  "main": "webpack.config.cjs",
+  "scripts": {
+    "dev": "webpack --config webpack.config.cjs",
+    "start": "webpack --config webpack.config.cjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "open",
+    "covid",
+    "covid-19",
+    "covid19",
+    "france",
+    "attestation",
+    "open-source",
+    "deplacement",
+    "derogatoire"
+  ],
+  "author": "Timothy Diguiet",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "flatpickr": "^4.6.3",
+    "gsap": "^2.0.1",
+    "pdf-lib": "^1.4.1",
+    "qrcode": "^1.4.4"
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "browser-sync": "^2.24.4",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "copy-webpack-plugin": "^5.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.13.5",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.7",
+    "yarn": "^1.22.4",
+    "css-loader": "^3.5.2",
+    "style-loader": "^1.1.3"
+  }
+}

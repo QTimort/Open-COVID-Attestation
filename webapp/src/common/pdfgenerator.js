@@ -1,21 +1,19 @@
-const PDFLib = require('pdf-lib')
-const PDFDocument =  PDFLib.PDFDocument;
-const StandardFonts =  PDFLib.StandardFonts;
-const QRCode =  require('qrcode');
-const DateFormat = require('dateformat');
-const FS = require('fs');
-const PdfBasePath = "../common/res/certificate.pdf";
+import QRCode from  'qrcode';
+import {ReasonsEnum} from "./reasonsenum.js";
 const Version = "2020 - c35428a"
-
-const ReasonsEnum = Object.freeze({
-    work: 0,
-    grocery: 1,
-    health: 2,
-    family: 3,
-    sport: 4,
-    legal: 5,
-    missions: 6,
-})
+import { default as PDF } from 'pdf-lib'
+var PDFDocument;
+var StandardFonts;
+// todo improve those messy imports
+if (PDF === undefined) { //webpack babel
+    import('pdf-lib').then((P) => {
+        PDFDocument = P.PDFDocument;
+        StandardFonts = P.StandardFonts;
+    });
+} else { //nodejs
+    PDFDocument = PDF.PDFDocument;
+    StandardFonts = PDF.StandardFonts;
+}
 
 const ReasonsToGoOutInfo = [
     {key: ReasonsEnum.work, draw:'x', x: 76, y: 527, size: 19},
@@ -26,56 +24,6 @@ const ReasonsToGoOutInfo = [
     {key: ReasonsEnum.legal, draw:'x', x: 76, y: 298, size: 19},
     {key: ReasonsEnum.missions, draw:'x', x: 76, y: 260, size: 19}
 ]
-
-class ProfileData {
-    constructor(
-        lastName = "Macro",
-        firstName = "Manu",
-        birthday = "21/12/1977",
-        birthplace = "Amiens",
-        address = "Palais de l'Élysée, Paris 8e",
-        zipcode = "75008",
-        town = "Paris",
-        dateOut = new Date(),
-        dateRelease = new Date(),
-        reasons = []
-    ) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.birthday = birthday;
-        this.birthplace = birthplace;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.town = town;
-        this.dateOut = dateOut;
-        this.dateRelease = dateRelease;
-        this.reasons = reasons;
-    }
-
-    getFormattedDateRelease() {
-        return DateFormat(this.dateRelease, "dd/mm/yyyy");
-    }
-
-    getFormattedHourRelease() {
-        return DateFormat(this.dateRelease, "HH:MM");
-    }
-
-    getFormattedDateOut() {
-        return DateFormat(this.dateOut, "dd/mm/yyyy");
-    }
-
-    getFormattedHourOut() {
-        return DateFormat(this.dateOut, "HH:MM");
-    }
-
-    getFormattedHoursOut() {
-        return DateFormat(this.dateOut, "HH");
-    }
-
-    getFormattedMinutesOut() {
-        return DateFormat(this.dateOut, "MM");
-    }
-}
 
 const generateQR = async text => {
     try {
@@ -102,7 +50,7 @@ function idealFontSize(font, text, maxWidth, minSize, defaultSize) {
     return (textWidth > maxWidth) ? null : currentSize
 }
 
-async function generatePdf(profile) {
+async function generatePdf(profile, basePdf) {
     const data = [
         `Cree le: ${profile.getFormattedDateRelease()} a ${profile.getFormattedHourRelease()}`,
         `Nom: ${profile.lastName}`,
@@ -112,8 +60,7 @@ async function generatePdf(profile) {
         `Sortie: ${profile.getFormattedDateOut()} a ${profile.getFormattedHourOut()}`,
         `Motifs: ${profile.reasons}`,
     ].join('; ')
-    const existingPdfBytes = FS.readFileSync(PdfBasePath);
-    const pdfDoc = await PDFDocument.load(existingPdfBytes)
+    const pdfDoc = await PDFDocument.load(basePdf)
     const page1 = pdfDoc.getPages()[0]
 
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
@@ -176,8 +123,11 @@ async function generatePdf(profile) {
     return await pdfDoc.save()
 }
 
-module.exports = {
+export default {
     generatePdf,
-    ProfileData,
-    ReasonsEnum
+}
+
+export {
+    generatePdf,
+    Version
 }

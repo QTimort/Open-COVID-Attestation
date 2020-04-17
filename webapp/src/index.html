@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open COVID Attestation</title>
+    <style>
+    </style>
+</head>
+<body>
+    <button id = "find-me">Show my location</button><br/>
+    <p id = "status"></p>
+    <a id = "map-link" target="_blank"></a>
+    <form>
+        <label for="street-input">street:</label><br>
+        <input type="text" id="street-input"><br>
+        <label for="city-input">city:</label><br>
+        <input type="text" id="city-input"><br>
+        <label for="postcode-input">postcode:</label><br>
+        <input type="text" id="postcode-input"><br>
+    </form>
+    <form>
+        <label for="firstname-input">firstname:</label><br>
+        <input type="text" id="firstname-input"><br>
+        <label for="lastname-input">lastname:</label><br>
+        <input type="text" id="lastname-input"><br>
+        <label for="birthday-input">birthday:</label><br>
+        <input class="date" type="text" id="birthday-input"><br>
+        <label for="birthplace-input">birthplace:</label><br>
+        <input type="text" id="birthplace-input"><br>
+    </form>
+    <form>
+        <label for="dateout-input">dateout:</label><br>
+        <input class="datetime" type="text" id="dateout-input"><br>
+        <label for="daterelease-input">daterelease:</label><br>
+        <input class="datetime" type="text" id="daterelease-input"><br>
+    </form>
+    <label>reasons:</label><br>
+    <form>
+        <label for="work-input">Work</label>
+        <input type="checkbox" id="work-input" name="work" value=0><br>
+        <label for="grocery-input">Grocery</label>
+        <input type="checkbox" id="grocery-input" name="grocery" value=1><br>
+        <label for="health-input">Health</label>
+        <input type="checkbox" id="health-input" name="health" value=2><br>
+        <label for="family-input">Family</label>
+        <input type="checkbox" id="family-input" name="family" value=3><br>
+        <label for="sport-input">Sport</label>
+        <input type="checkbox" id="sport-input" name="sport" value=4><br>
+        <label for="legal-input">Legal</label>
+        <input type="checkbox" id="legal-input" name="legal" value=5><br>
+        <label for="missions-input">Missions</label>
+        <input type="checkbox" id="missions-input" name="missions" value=6><br>
+    </form>
+    <button id="generate-pdf">Generate pdf</button><br/>
+</body>
+</html>
