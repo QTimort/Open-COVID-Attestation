@@ -43680,7 +43680,7 @@ function setupPage(event) {
       e.preventDefault();
       e.stopImmediatePropagation();
       saveInputsToProfile(p);
-      yield downloadBlob((yield generateAttestation(p)), "attestation.pdf-" + dateformat__WEBPACK_IMPORTED_MODULE_2___default()(p.dateRelease, "yyyy-mm-dd_HH-MM"));
+      yield downloadBlob((yield generateAttestation(p)), "attestation-" + dateformat__WEBPACK_IMPORTED_MODULE_2___default()(p.dateRelease, "yyyy-mm-dd_HH-MM") + ".pdf");
     });
 
     return function (_x2) {
@@ -43937,13 +43937,13 @@ class ProfileData {
   constructor() {
     var lastName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
     var firstName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-    var birthday = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : new Date();
+    var birthday = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
     var birthplace = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
     var address = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "";
     var zipcode = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
     var town = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "";
-    var dateOut = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : new Date();
-    var dateRelease = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : new Date();
+    var dateOut = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : "";
+    var dateRelease = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : "";
     var reasons = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : [];
     this.lastName = lastName;
     this.firstName = firstName;

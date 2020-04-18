@@ -179,7 +179,7 @@ function setupPage(event) {
 
         saveInputsToProfile(p);
 
-        await downloadBlob(await generateAttestation(p), "attestation.pdf-" + DateFormat(p.dateRelease, "yyyy-mm-dd_HH-MM"));
+        await downloadBlob(await generateAttestation(p), "attestation-" + DateFormat(p.dateRelease, "yyyy-mm-dd_HH-MM") + ".pdf");
     }
 
     findMeButon.addEventListener('click', geoFindMe);
