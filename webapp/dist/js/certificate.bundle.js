@@ -43498,7 +43498,14 @@ var healthInput = document.getElementById('health-input');
 var familyInput = document.getElementById('family-input');
 var sportInput = document.getElementById('sport-input');
 var legalInput = document.getElementById('legal-input');
-var missionsInput = document.getElementById('missions-input');
+var missionsInput = document.getElementById('missions-input'); //buttons
+
+var findMeButon = document.getElementById('find-me');
+var autoCompleteButon = document.getElementById('auto-complete');
+var dateOutButton = document.getElementById('generate-dateout');
+var dateReleaseButton = document.getElementById('generate-daterelease');
+var saveToLocalCacheButton = document.getElementById('save-to-cache');
+var removeFromLocalCacheButton = document.getElementById('remove-from-cache');
 
 function generateAttestation(_x) {
   return _generateAttestation.apply(this, arguments);
@@ -43522,7 +43529,9 @@ function downloadBlob(blob, fileName) {
   link.click();
 }
 
-function geoFindMe() {
+function geoFindMe(e) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
   var status = document.querySelector('#status');
   var mapLink = document.querySelector('#map-link');
   mapLink.href = '';
@@ -43539,15 +43548,16 @@ function geoFindMe() {
     fetch("https://api-adresse.data.gouv.fr/reverse/?lon=".concat(longitude, "&lat=").concat(latitude, "&type=housenumber&limit=15")).then(e => e.json(), e => {
       alert('error: ' + e);
     }).then(e => {
-      console.log(e.features);
+      console.log(e.features); // todo handle error missing
+
       var address = e.features[0].properties;
 
       if (address.distance > 1000) {
-        alert("Too far!");
+        alert("Too far!"); // todo move this to html
       }
 
       if (address.scope < 0.95) {
-        alert("Low address score!");
+        alert("Low address score!"); // todo move this to html
       }
 
       streetInput.value = address.name;
@@ -43580,47 +43590,134 @@ function geoFindMe() {
     status.textContent = 'Locating…';
     navigator.geolocation.getCurrentPosition(success, error, {
       enableHighAccuracy: true,
-      maximumAge: 10000,
-      timeout: 20000
+      maximumAge: 60000,
+      timeout: 10000
     });
   }
 }
 
-flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".date", {
-  locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"]
-});
-flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".datetime", {
-  enableTime: true,
-  locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"]
-});
-document.querySelector('#find-me').addEventListener('click', geoFindMe);
-
-document.getElementById('generate-pdf').onmouseup = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(function* (e) {
-    var p = new _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"]();
-    p.zipcode = postCodeInput.value;
-    p.address = streetInput.value;
-    p.town = cityInput.value;
-    p.firstName = firstNameInput.value;
-    p.lastName = lastNameInput.value;
-    p.birthday = birthdayInput.value;
-    p.birthplace = birthPlaceInput.value;
-    p.dateOut = dateOutInput.value;
-    p.dateRelease = dateReleaseInput.value;
-    if (workInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].work);
-    if (groceryInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].grocery);
-    if (healthInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].health);
-    if (familyInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].family);
-    if (sportInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].sport);
-    if (legalInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].legal);
-    if (missionsInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].missions);
-    yield downloadBlob((yield generateAttestation(p)), "attestation.pdf");
+function setupPage(event) {
+  flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".date", {
+    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"],
+    dateFormat: "d-m-Y",
+    altInput: false,
+    disableMobile: true
   });
+  flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".datetime", {
+    enableTime: true,
+    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"],
+    dateFormat: "d-m-Y H:i",
+    altInput: false,
+    disableMobile: true
+  });
+  var jsonProfile = window.localStorage.getItem('profile');
+  var p;
+  exportProfileToInputsPlaceHolder(new _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"]());
 
-  return function (_x2) {
-    return _ref.apply(this, arguments);
-  };
-}();
+  if (jsonProfile !== undefined && jsonProfile !== null && jsonProfile.length > 0) {
+    p = _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"].from(JSON.parse(jsonProfile));
+    exportProfileToInputs(p);
+  } else {
+    p = new _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"]();
+  }
+
+  function exportProfileToInputs(profileData) {
+    postCodeInput.value = profileData.zipcode;
+    streetInput.value = profileData.address;
+    cityInput.value = profileData.town;
+    firstNameInput.value = profileData.firstName;
+    lastNameInput.value = profileData.lastName;
+    birthdayInput.value = profileData.birthday;
+    birthPlaceInput.value = profileData.birthplace;
+    dateOutInput.value = profileData.dateOut;
+    dateReleaseInput.value = profileData.dateRelease;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].work)) workInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].grocery)) groceryInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].health)) healthInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].family)) familyInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].sport)) sportInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].legal)) legalInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].missions)) missionsInput.checked = true;
+  }
+
+  function exportProfileToInputsPlaceHolder(profileData) {
+    postCodeInput.placeholder = profileData.zipcode;
+    streetInput.placeholder = profileData.address;
+    cityInput.placeholder = profileData.town;
+    firstNameInput.placeholder = profileData.firstName;
+    lastNameInput.placeholder = profileData.lastName;
+    birthdayInput.placeholder = profileData.birthday;
+    birthPlaceInput.placeholder = profileData.birthplace;
+    dateOutInput.placeholder = profileData.dateOut;
+    dateReleaseInput.placeholder = profileData.dateRelease;
+  }
+
+  function saveInputsToProfile(profileData) {
+    profileData.zipcode = postCodeInput.value;
+    profileData.address = streetInput.value;
+    profileData.town = cityInput.value;
+    profileData.firstName = firstNameInput.value;
+    profileData.lastName = lastNameInput.value;
+    profileData.birthday = birthdayInput.value;
+    profileData.birthplace = birthPlaceInput.value;
+    profileData.dateOut = dateOutInput.value;
+    profileData.dateRelease = dateReleaseInput.value;
+  }
+
+  document.getElementById('generate-pdf').onmouseup = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      saveInputsToProfile(p);
+      if (workInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].work);
+      if (groceryInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].grocery);
+      if (healthInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].health);
+      if (familyInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].family);
+      if (sportInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].sport);
+      if (legalInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].legal);
+      if (missionsInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].missions);
+      yield downloadBlob((yield generateAttestation(p)), "attestation.pdf");
+    });
+
+    return function (_x2) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  findMeButon.addEventListener('click', geoFindMe);
+  dateOutButton.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var nowMinus30 = new Date(Date.now() - 1000 * 60 * 30);
+    dateOutInput.value = nowMinus30;
+  });
+  dateReleaseButton.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var nowMinus36 = new Date(Date.now() - 1000 * 60 * 36);
+    dateReleaseInput.value = nowMinus36;
+  });
+  autoCompleteButon.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    dateOutButton.click();
+    dateReleaseButton.click();
+    findMeButon.click();
+  });
+  removeFromLocalCacheButton.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    window.localStorage.clear();
+  });
+  saveToLocalCacheButton.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    saveInputsToProfile(p);
+    window.localStorage.setItem('profile', JSON.stringify(p)); // todo check if has local storage
+  });
+}
+
+window.addEventListener('load', setupPage);
 
 /***/ }),
 
@@ -43823,6 +43920,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class ProfileData {
+  static from(json) {
+    return Object.assign(new ProfileData(), json);
+  }
+
   constructor() {
     var lastName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Macro";
     var firstName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Manu";

@@ -1,6 +1,10 @@
 import DateFormat from 'dateformat';
 
 class ProfileData {
+    static from(json){
+        return Object.assign(new ProfileData(), json);
+    }
+
     constructor(
         lastName = "Macro",
         firstName = "Manu",

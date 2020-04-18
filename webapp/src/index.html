@@ -4,53 +4,93 @@
     <meta charset="UTF-8">
     <title>Open COVID Attestation</title>
     <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:100,300,400");
+        body {
+            font-family: "Montserrat",serif;
+        }
+        @media screen and (min-width: 601px) {
+            body {
+                font-size: 1em;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 4em;
+            }
+        }
+
+        input {
+            padding: 10px;
+            font-size: inherit;
+        }
+        button {
+            padding: 10px;
+            font-size: inherit;
+        }
+
+        input[type="checkbox" i] {
+            height: 25px;
+            width: 25px;
+            margin-bottom: 20px;
+            background-color: #eee;
+            border: solid gray;
+            -webkit-box-shadow: 0px 0px 0px 1px grey;
+            -moz-box-shadow: 0px 0px 0px 1px grey;
+            box-shadow: 0px 0px 0px 1px grey;
+        }
+
     </style>
 </head>
 <body>
-    <button id = "find-me">Show my location</button><br/>
-    <p id = "status"></p>
-    <a id = "map-link" target="_blank"></a>
+    <h1>Open COVID Attestation</h1>
+    <div>
+        <p id = "status"></p>
+        <a id = "map-link" target="_blank"></a>
+        <button id="auto-complete">Auto-Complétion</button><br>
+        <form>
+            <label for="street-input">Adresse</label><br>
+            <input type="text" id="street-input"><button id="find-me">Géo-localiser</button><br>
+            <label for="city-input">Ville</label><br>
+            <input type="text" id="city-input"><br>
+            <label for="postcode-input">Code postale</label><br>
+            <input type="text" id="postcode-input"><br>
+        </form>
+    </div>
     <form>
-        <label for="street-input">street:</label><br>
-        <input type="text" id="street-input"><br>
-        <label for="city-input">city:</label><br>
-        <input type="text" id="city-input"><br>
-        <label for="postcode-input">postcode:</label><br>
-        <input type="text" id="postcode-input"><br>
-    </form>
-    <form>
-        <label for="firstname-input">firstname:</label><br>
+        <label for="firstname-input">Prénom</label><br>
         <input type="text" id="firstname-input"><br>
-        <label for="lastname-input">lastname:</label><br>
+        <label for="lastname-input">Nom</label><br>
         <input type="text" id="lastname-input"><br>
-        <label for="birthday-input">birthday:</label><br>
+        <label for="birthday-input">Date de naissance</label><br>
         <input class="date" type="text" id="birthday-input"><br>
-        <label for="birthplace-input">birthplace:</label><br>
+        <label for="birthplace-input">Lieu de naissance</label><br>
         <input type="text" id="birthplace-input"><br>
     </form>
     <form>
-        <label for="dateout-input">dateout:</label><br>
-        <input class="datetime" type="text" id="dateout-input"><br>
-        <label for="daterelease-input">daterelease:</label><br>
-        <input class="datetime" type="text" id="daterelease-input"><br>
+        <label for="dateout-input">Date et heure de sortie</label><br>
+        <input class="datetime" type="text" id="dateout-input"><button id="generate-dateout">Générer</button><br>
+        <label for="daterelease-input">Date et heure de réalisation</label><br>
+        <input class="datetime" type="text" id="daterelease-input"><button id="generate-daterelease">Générer</button><br>
     </form>
-    <label>reasons:</label><br>
+    <h2>Raisons</h2>
     <form>
-        <label for="work-input">Work</label>
-        <input type="checkbox" id="work-input" name="work" value=0><br>
-        <label for="grocery-input">Grocery</label>
-        <input type="checkbox" id="grocery-input" name="grocery" value=1><br>
-        <label for="health-input">Health</label>
-        <input type="checkbox" id="health-input" name="health" value=2><br>
-        <label for="family-input">Family</label>
-        <input type="checkbox" id="family-input" name="family" value=3><br>
-        <label for="sport-input">Sport</label>
-        <input type="checkbox" id="sport-input" name="sport" value=4><br>
-        <label for="legal-input">Legal</label>
-        <input type="checkbox" id="legal-input" name="legal" value=5><br>
-        <label for="missions-input">Missions</label>
-        <input type="checkbox" id="missions-input" name="missions" value=6><br>
+        <input type="checkbox" id="work-input" name="work" value=0>
+        <label for="work-input">Travail</label><br>
+        <input type="checkbox" id="grocery-input" name="grocery" value=1>
+        <label for="grocery-input">Course</label><br>
+        <input type="checkbox" id="health-input" name="health" value=2>
+        <label for="health-input">Santé</label><br>
+        <input type="checkbox" id="family-input" name="family" value=3>
+        <label for="family-input">Famille</label><br>
+        <input type="checkbox" id="sport-input" name="sport" value=4>
+        <label for="sport-input">Sport</label><br>
+        <input type="checkbox" id="legal-input" name="legal" value=5>
+        <label for="legal-input">Légale</label><br>
+        <input type="checkbox" class="checkmark" id="missions-input" name="missions" value=6>
+        <label for="missions-input">Missions</label><br>
     </form>
-    <button id="generate-pdf">Generate pdf</button><br/>
+    <button id="generate-pdf">Générer l'attestation</button><br/>
+    <button id="save-to-cache">Sauvegarder les données dans le cache locale</button><br/>
+    <button id="remove-from-cache">Supprimer les données du cache locale</button><br/>
 </body>
 </html>
