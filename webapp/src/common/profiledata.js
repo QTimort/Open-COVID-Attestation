@@ -5,14 +5,28 @@ class ProfileData {
         return Object.assign(new ProfileData(), json);
     }
 
+    static newWithDefault() {
+        return new ProfileData("Macro",
+            "Manu",
+             "21/12/1977",
+             "Amiens",
+             "Palais de l'Élysée, Paris 8e",
+             "75008",
+             "Paris",
+             new Date(),
+             new Date(),
+             []
+        );
+    }
+
     constructor(
-        lastName = "Macro",
-        firstName = "Manu",
-        birthday = "21/12/1977",
-        birthplace = "Amiens",
-        address = "Palais de l'Élysée, Paris 8e",
-        zipcode = "75008",
-        town = "Paris",
+        lastName = "",
+        firstName = "",
+        birthday = new Date(),
+        birthplace = "",
+        address = "",
+        zipcode = "",
+        town = "",
         dateOut = new Date(),
         dateRelease = new Date(),
         reasons = []
@@ -29,12 +43,16 @@ class ProfileData {
         this.reasons = reasons;
     }
 
+    getFormattedBirthday() {
+        return DateFormat(this.birthday, "dd/mm/yyyy");
+    }
+
     getFormattedDateRelease() {
         return DateFormat(this.dateRelease, "dd/mm/yyyy");
     }
 
     getFormattedHourRelease() {
-        return DateFormat(this.dateRelease, "HH:MM");
+        return DateFormat(this.dateRelease, "HH\'h\'MM");
     }
 
     getFormattedDateOut() {
@@ -42,7 +60,7 @@ class ProfileData {
     }
 
     getFormattedHourOut() {
-        return DateFormat(this.dateOut, "HH:MM");
+        return DateFormat(this.dateOut, "HH\'h\'MM");
     }
 
     getFormattedHoursOut() {

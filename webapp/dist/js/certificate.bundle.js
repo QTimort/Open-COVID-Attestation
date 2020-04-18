@@ -43465,15 +43465,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flatpickr__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
 /* harmony import */ var flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_flatpickr_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flatpickr/dist/l10n/fr.js */ "./node_modules/flatpickr/dist/l10n/fr.js");
-/* harmony import */ var flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _base64pdf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./base64pdf */ "./src/base64pdf.js");
-/* harmony import */ var _common_pdfgenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./common/pdfgenerator */ "./src/common/pdfgenerator.js");
-/* harmony import */ var _common_profiledata__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./common/profiledata */ "./src/common/profiledata.js");
-/* harmony import */ var _common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./common/reasonsenum */ "./src/common/reasonsenum.js");
+/* harmony import */ var dateformat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dateformat */ "./node_modules/dateformat/lib/dateformat.js");
+/* harmony import */ var dateformat__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dateformat__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flatpickr/dist/l10n/fr.js */ "./node_modules/flatpickr/dist/l10n/fr.js");
+/* harmony import */ var flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _base64pdf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./base64pdf */ "./src/base64pdf.js");
+/* harmony import */ var _common_pdfgenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./common/pdfgenerator */ "./src/common/pdfgenerator.js");
+/* harmony import */ var _common_profiledata__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./common/profiledata */ "./src/common/profiledata.js");
+/* harmony import */ var _common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./common/reasonsenum */ "./src/common/reasonsenum.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -43513,7 +43516,7 @@ function generateAttestation(_x) {
 
 function _generateAttestation() {
   _generateAttestation = _asyncToGenerator(function* (profile) {
-    var pdfBytes = yield Object(_common_pdfgenerator__WEBPACK_IMPORTED_MODULE_4__["generatePdf"])(profile, 'data:application/pdf;base64,' + _base64pdf__WEBPACK_IMPORTED_MODULE_3__["Base64BasePdf"]);
+    var pdfBytes = yield Object(_common_pdfgenerator__WEBPACK_IMPORTED_MODULE_5__["generatePdf"])(profile, 'data:application/pdf;base64,' + _base64pdf__WEBPACK_IMPORTED_MODULE_4__["Base64BasePdf"]);
     return new Blob([pdfBytes], {
       type: 'application/pdf'
     });
@@ -43598,27 +43601,27 @@ function geoFindMe(e) {
 
 function setupPage(event) {
   flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".date", {
-    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"],
-    dateFormat: "d-m-Y",
+    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_3__["French"],
+    altFormat: "d-m-Y",
     altInput: false,
     disableMobile: true
   });
   flatpickr__WEBPACK_IMPORTED_MODULE_0___default()(".datetime", {
     enableTime: true,
-    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_2__["French"],
-    dateFormat: "d-m-Y H:i",
+    locale: flatpickr_dist_l10n_fr_js__WEBPACK_IMPORTED_MODULE_3__["French"],
+    altFormat: "d-m-Y H:i",
     altInput: false,
     disableMobile: true
   });
   var jsonProfile = window.localStorage.getItem('profile');
   var p;
-  exportProfileToInputsPlaceHolder(new _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"]());
+  exportProfileToInputsPlaceHolder(_common_profiledata__WEBPACK_IMPORTED_MODULE_6__["ProfileData"].newWithDefault());
 
   if (jsonProfile !== undefined && jsonProfile !== null && jsonProfile.length > 0) {
-    p = _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"].from(JSON.parse(jsonProfile));
+    p = _common_profiledata__WEBPACK_IMPORTED_MODULE_6__["ProfileData"].from(JSON.parse(jsonProfile));
     exportProfileToInputs(p);
   } else {
-    p = new _common_profiledata__WEBPACK_IMPORTED_MODULE_5__["ProfileData"]();
+    p = new _common_profiledata__WEBPACK_IMPORTED_MODULE_6__["ProfileData"]();
   }
 
   function exportProfileToInputs(profileData) {
@@ -43631,13 +43634,13 @@ function setupPage(event) {
     birthPlaceInput.value = profileData.birthplace;
     dateOutInput.value = profileData.dateOut;
     dateReleaseInput.value = profileData.dateRelease;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].work)) workInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].grocery)) groceryInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].health)) healthInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].family)) familyInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].sport)) sportInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].legal)) legalInput.checked = true;
-    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].missions)) missionsInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].work)) workInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].grocery)) groceryInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].health)) healthInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].family)) familyInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].sport)) sportInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].legal)) legalInput.checked = true;
+    if (profileData.reasons.includes(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].missions)) missionsInput.checked = true;
   }
 
   function exportProfileToInputsPlaceHolder(profileData) {
@@ -43662,6 +43665,14 @@ function setupPage(event) {
     profileData.birthplace = birthPlaceInput.value;
     profileData.dateOut = dateOutInput.value;
     profileData.dateRelease = dateReleaseInput.value;
+    p.reasons = [];
+    if (workInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].work);
+    if (groceryInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].grocery);
+    if (healthInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].health);
+    if (familyInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].family);
+    if (sportInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].sport);
+    if (legalInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].legal);
+    if (missionsInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_7__["ReasonsEnum"].missions);
   }
 
   document.getElementById('generate-pdf').onmouseup = /*#__PURE__*/function () {
@@ -43669,14 +43680,7 @@ function setupPage(event) {
       e.preventDefault();
       e.stopImmediatePropagation();
       saveInputsToProfile(p);
-      if (workInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].work);
-      if (groceryInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].grocery);
-      if (healthInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].health);
-      if (familyInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].family);
-      if (sportInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].sport);
-      if (legalInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].legal);
-      if (missionsInput.checked) p.reasons.push(_common_reasonsenum__WEBPACK_IMPORTED_MODULE_6__["ReasonsEnum"].missions);
-      yield downloadBlob((yield generateAttestation(p)), "attestation.pdf");
+      yield downloadBlob((yield generateAttestation(p)), "attestation.pdf-" + dateformat__WEBPACK_IMPORTED_MODULE_2___default()(p.dateRelease, "yyyy-mm-dd_HH-MM"));
     });
 
     return function (_x2) {
@@ -43708,6 +43712,8 @@ function setupPage(event) {
     e.preventDefault();
     e.stopImmediatePropagation();
     window.localStorage.clear();
+    p = new _common_profiledata__WEBPACK_IMPORTED_MODULE_6__["ProfileData"]();
+    exportProfileToInputs(p);
   });
   saveToLocalCacheButton.addEventListener('click', e => {
     e.preventDefault();
@@ -43840,7 +43846,7 @@ function generatePdf(_x2, _x3) {
 
 function _generatePdf() {
   _generatePdf = _asyncToGenerator(function* (profile, basePdf) {
-    var data = ["Cree le: ".concat(profile.getFormattedDateRelease(), " a ").concat(profile.getFormattedHourRelease()), "Nom: ".concat(profile.lastName), "Prenom: ".concat(profile.firstName), "Naissance: ".concat(profile.birthday, " a ").concat(profile.birthplace), "Adresse: ".concat(profile.address, " ").concat(profile.zipcode, " ").concat(profile.town), "Sortie: ".concat(profile.getFormattedDateOut(), " a ").concat(profile.getFormattedHourOut()), "Motifs: ".concat(profile.reasons)].join('; ');
+    var data = ["Cree le: ".concat(profile.getFormattedDateRelease(), " a ").concat(profile.getFormattedHourRelease()), "Nom: ".concat(profile.lastName), "Prenom: ".concat(profile.firstName), "Naissance: ".concat(profile.getFormattedBirthday(), " a ").concat(profile.birthplace), "Adresse: ".concat(profile.address, " ").concat(profile.zipcode, " ").concat(profile.town), "Sortie: ".concat(profile.getFormattedDateOut(), " a ").concat(profile.getFormattedHourOut()), "Motifs: ".concat(profile.reasons.join('-'))].join('; ');
     var pdfDoc = yield PDFDocument.load(basePdf);
     var page1 = pdfDoc.getPages()[0];
     var font = yield pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -43856,7 +43862,7 @@ function _generatePdf() {
     };
 
     drawText("".concat(profile.firstName, " ").concat(profile.lastName), 123, 686);
-    drawText(profile.birthday, 123, 661);
+    drawText(profile.getFormattedBirthday(), 123, 661);
     drawText(profile.birthplace, 92, 638);
     drawText("".concat(profile.address, " ").concat(profile.zipcode, " ").concat(profile.town), 134, 613);
     profile.reasons.forEach(reason => {
@@ -43924,14 +43930,18 @@ class ProfileData {
     return Object.assign(new ProfileData(), json);
   }
 
+  static newWithDefault() {
+    return new ProfileData("Macro", "Manu", "21/12/1977", "Amiens", "Palais de l'Élysée, Paris 8e", "75008", "Paris", new Date(), new Date(), []);
+  }
+
   constructor() {
-    var lastName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Macro";
-    var firstName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Manu";
-    var birthday = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "21/12/1977";
-    var birthplace = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "Amiens";
-    var address = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "Palais de l'Élysée, Paris 8e";
-    var zipcode = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "75008";
-    var town = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "Paris";
+    var lastName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var firstName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+    var birthday = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : new Date();
+    var birthplace = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+    var address = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "";
+    var zipcode = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+    var town = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "";
     var dateOut = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : new Date();
     var dateRelease = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : new Date();
     var reasons = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : [];
@@ -43947,12 +43957,16 @@ class ProfileData {
     this.reasons = reasons;
   }
 
+  getFormattedBirthday() {
+    return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.birthday, "dd/mm/yyyy");
+  }
+
   getFormattedDateRelease() {
     return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.dateRelease, "dd/mm/yyyy");
   }
 
   getFormattedHourRelease() {
-    return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.dateRelease, "HH:MM");
+    return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.dateRelease, "HH\'h\'MM");
   }
 
   getFormattedDateOut() {
@@ -43960,7 +43974,7 @@ class ProfileData {
   }
 
   getFormattedHourOut() {
-    return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.dateOut, "HH:MM");
+    return dateformat__WEBPACK_IMPORTED_MODULE_0___default()(this.dateOut, "HH\'h\'MM");
   }
 
   getFormattedHoursOut() {
@@ -43988,13 +44002,13 @@ class ProfileData {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReasonsEnum", function() { return ReasonsEnum; });
 var ReasonsEnum = Object.freeze({
-  work: 0,
-  grocery: 1,
-  health: 2,
-  family: 3,
-  sport: 4,
-  legal: 5,
-  missions: 6
+  work: 'travail',
+  grocery: 'courses',
+  health: 'sante',
+  family: 'famille',
+  sport: 'sport',
+  legal: 'judiciaire',
+  missions: 'missions'
 });
 
 

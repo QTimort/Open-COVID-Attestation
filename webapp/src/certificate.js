@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.css';
+import DateFormat from 'dateformat';
 import {French} from "flatpickr/dist/l10n/fr.js"
 import {Base64BasePdf} from "./base64pdf";
 import {generatePdf} from "./common/pdfgenerator";
@@ -105,11 +106,11 @@ function geoFindMe(e) {
 }
 
 function setupPage(event) {
-    flatpickr(".date", {locale: French, dateFormat: "d-m-Y", altInput: false, disableMobile: true});
-    flatpickr(".datetime", {enableTime: true, locale: French, dateFormat: "d-m-Y H:i", altInput: false, disableMobile: true});
+    flatpickr(".date", {locale: French, altFormat: "d-m-Y", altInput: false, disableMobile: true});
+    flatpickr(".datetime", {enableTime: true, locale: French, altFormat: "d-m-Y H:i", altInput: false, disableMobile: true});
     let jsonProfile = window.localStorage.getItem('profile');
     let p;
-    exportProfileToInputsPlaceHolder(new ProfileData());
+    exportProfileToInputsPlaceHolder(ProfileData.newWithDefault());
     if (jsonProfile !== undefined && jsonProfile !== null && jsonProfile.length > 0) {
         p = ProfileData.from(JSON.parse(jsonProfile));
         exportProfileToInputs(p);
@@ -161,6 +162,15 @@ function setupPage(event) {
 
         profileData.dateOut = dateOutInput.value;
         profileData.dateRelease = dateReleaseInput.value;
+
+        p.reasons = [];
+        if (workInput.checked) p.reasons.push(ReasonsEnum.work);
+        if (groceryInput.checked) p.reasons.push(ReasonsEnum.grocery);
+        if (healthInput.checked) p.reasons.push(ReasonsEnum.health);
+        if (familyInput.checked) p.reasons.push(ReasonsEnum.family);
+        if (sportInput.checked) p.reasons.push(ReasonsEnum.sport);
+        if (legalInput.checked) p.reasons.push(ReasonsEnum.legal);
+        if (missionsInput.checked) p.reasons.push(ReasonsEnum.missions);
     }
 
     document.getElementById('generate-pdf').onmouseup = async (e) => {
@@ -169,15 +179,7 @@ function setupPage(event) {
 
         saveInputsToProfile(p);
 
-        if (workInput.checked) p.reasons.push(ReasonsEnum.work);
-        if (groceryInput.checked) p.reasons.push(ReasonsEnum.grocery);
-        if (healthInput.checked) p.reasons.push(ReasonsEnum.health);
-        if (familyInput.checked) p.reasons.push(ReasonsEnum.family);
-        if (sportInput.checked) p.reasons.push(ReasonsEnum.sport);
-        if (legalInput.checked) p.reasons.push(ReasonsEnum.legal);
-        if (missionsInput.checked) p.reasons.push(ReasonsEnum.missions);
-
-        await downloadBlob(await generateAttestation(p), "attestation.pdf");
+        await downloadBlob(await generateAttestation(p), "attestation.pdf-" + DateFormat(p.dateRelease, "yyyy-mm-dd_HH-MM"));
     }
 
     findMeButon.addEventListener('click', geoFindMe);
@@ -208,6 +210,8 @@ function setupPage(event) {
         e.preventDefault();
         e.stopImmediatePropagation();
         window.localStorage.clear();
+        p = new ProfileData();
+        exportProfileToInputs(p);
     });
 
     saveToLocalCacheButton.addEventListener('click', (e) => {

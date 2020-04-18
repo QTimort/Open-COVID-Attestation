@@ -55,10 +55,10 @@ async function generatePdf(profile, basePdf) {
         `Cree le: ${profile.getFormattedDateRelease()} a ${profile.getFormattedHourRelease()}`,
         `Nom: ${profile.lastName}`,
         `Prenom: ${profile.firstName}`,
-        `Naissance: ${profile.birthday} a ${profile.birthplace}`,
+        `Naissance: ${profile.getFormattedBirthday()} a ${profile.birthplace}`,
         `Adresse: ${profile.address} ${profile.zipcode} ${profile.town}`,
         `Sortie: ${profile.getFormattedDateOut()} a ${profile.getFormattedHourOut()}`,
-        `Motifs: ${profile.reasons}`,
+        `Motifs: ${profile.reasons.join('-')}`,
     ].join('; ')
     const pdfDoc = await PDFDocument.load(basePdf)
     const page1 = pdfDoc.getPages()[0]
@@ -74,7 +74,7 @@ async function generatePdf(profile, basePdf) {
     }
 
     drawText(`${profile.firstName} ${profile.lastName}`, 123, 686)
-    drawText(profile.birthday, 123, 661)
+    drawText(profile.getFormattedBirthday(), 123, 661)
     drawText(profile.birthplace, 92, 638)
     drawText(`${profile.address} ${profile.zipcode} ${profile.town}`, 134, 613)
 
