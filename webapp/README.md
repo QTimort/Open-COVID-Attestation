@@ -1,6 +1,6 @@
 A simple self-contained WebApp to generate COVID-19 Certificate for educational purposes :)
 ## Usage
-https://htmlpreview.github.io/?https://github.com/QTimort/Open-COVID-Attestation/blob/master/webapp/dist/index.html
+https://raw.githack.com/QTimort/Open-COVID-Attestation/master/webapp/dist/index.html
 
 ## Dev Setup
 
