@@ -22,13 +22,13 @@ class ProfileData {
     constructor(
         lastName = "",
         firstName = "",
-        birthday = new Date(),
+        birthday = "",
         birthplace = "",
         address = "",
         zipcode = "",
         town = "",
-        dateOut = new Date(),
-        dateRelease = new Date(),
+        dateOut = "",
+        dateRelease = "",
         reasons = []
     ) {
         this.lastName = lastName;
