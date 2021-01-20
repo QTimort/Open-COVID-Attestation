@@ -25,7 +25,7 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "flatpickr": "^4.6.3",
-    "gsap": "^2.0.1",
+    "gsap": "^3.6.0",
     "pdf-lib": "^1.4.1",
     "qrcode": "^1.4.4"
   },
