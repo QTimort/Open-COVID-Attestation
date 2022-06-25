@@ -21,7 +21,7 @@
     "cross-blob": "^1.2.2",
     "dateformat": "^3.0.3",
     "esm": "^3.2.25",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "pdf-lib": "^1.4.1",
     "qrcode": "^1.4.4"
   }
